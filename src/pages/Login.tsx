@@ -32,10 +32,7 @@ const SignIn:React.FC = () => {
 
   return (
     <PageContainer>
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -72,7 +69,6 @@ const SignIn:React.FC = () => {
             Sign In
           </Button>
         </form>
-      </div>
     </PageContainer>
   );
 }
