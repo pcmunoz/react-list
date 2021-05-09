@@ -27,52 +27,70 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const SignIn: React.FC = () => {
+const Login: React.FC = () => {
     const classes = useStyles()
+
+    const [username, setUsername] = React.useState<string>('')
+    const [password, setPassword] = React.useState<string>('')
+
+    const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(event.target.value)
+    }
+
+    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value)
+    }
+
+    const handleSubmit = () => {
+        console.log(username)
+    }
 
     return (
         <PageContainer>
             <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+                <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-                Sign in
+                Login
             </Typography>
-            <form className={classes.form} noValidate>
-                <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    autoComplete="username"
-                    autoFocus
-                />
-                <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="secondary"
-                    className={classes.submit}
-                >
-                    Sign In
-                </Button>
-            </form>
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={username}
+                onChange={handleUsernameChange}
+            />
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={handlePasswordChange}
+            />
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                className={classes.submit}
+                onClick={handleSubmit}
+            >
+                Login
+            </Button>
         </PageContainer>
     )
 }
 
-export default SignIn
+export default Login

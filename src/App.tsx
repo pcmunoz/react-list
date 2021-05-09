@@ -2,8 +2,23 @@ import React from 'react'
 import logo from './logo.svg'
 import { Counter } from './features/counter/Counter'
 import './App.css'
+import { User } from './model/user'
+import Login from './pages/Login'
 
-function App() {
+const App: React.FC = () => {
+    const [user, setUser] = React.useState<User | undefined>()
+
+    React.useEffect(() => {
+        const localUser = localStorage.getItem('user')
+        if (localUser) {
+            setUser(JSON.parse(localUser))
+        }
+    }, [])
+
+    if (!user) {
+        return <Login />
+    }
+
     return (
         <div className="App">
             <header className="App-header">
