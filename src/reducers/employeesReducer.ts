@@ -16,8 +16,8 @@ export const employeesSlice = createSlice({
     initialState,
     reducers: {
         setEmployees: (state, action: PayloadAction<Employee[]>) => {
-            console.log(action)
             state.list = action.payload
+            state.error = undefined
         },
         fetchEmployeesError: (state, action: PayloadAction<string>) => {
             state.error = action.payload
