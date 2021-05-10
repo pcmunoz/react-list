@@ -6,6 +6,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import PageContainer from '../common/PageContainer'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { LOGIN_USER } from '../app/actions'
+import { selectCurrentUserError } from '../reducers/currentUserReducer'
+import FormHelperText from '@material-ui/core/FormHelperText'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -30,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
 const Login: React.FC = () => {
     const classes = useStyles()
 
+    const dispatch = useAppDispatch()
+
+    const error = useAppSelector(selectCurrentUserError)
+
     const [username, setUsername] = React.useState<string>('')
     const [password, setPassword] = React.useState<string>('')
 
@@ -42,7 +50,7 @@ const Login: React.FC = () => {
     }
 
     const handleSubmit = () => {
-        console.log(username)
+        dispatch({ type: LOGIN_USER, payload: { username, password } })
     }
 
     return (
@@ -65,6 +73,7 @@ const Login: React.FC = () => {
                 autoFocus
                 value={username}
                 onChange={handleUsernameChange}
+                error={!!error}
             />
             <TextField
                 variant="outlined"
@@ -78,7 +87,9 @@ const Login: React.FC = () => {
                 autoComplete="current-password"
                 value={password}
                 onChange={handlePasswordChange}
+                error={!!error}
             />
+            {!!error && <FormHelperText error>{error}</FormHelperText>}
             <Button
                 type="submit"
                 fullWidth

@@ -1,35 +1,50 @@
 import React from 'react'
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
-import ListItem, { ListItemProps } from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import Divider from '@material-ui/core/Divider'
-import InboxIcon from '@material-ui/icons/Inbox'
-import DraftsIcon from '@material-ui/icons/Drafts'
 import PageContainer from '../common/PageContainer'
 import TextField from '@material-ui/core/TextField'
+import CommonAppBar from '../common/AppBar'
+import { selectEmployees, selectEmployeesError } from '../reducers/employeesReducer'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { FETCH_EMPLOYEES } from '../app/actions'
+import CommonSnackbar from '../common/Snackbar'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             width: '100%',
-            maxWidth: 360,
             backgroundColor: theme.palette.background.paper,
         },
     }),
 )
 
-const ListItemLink = (props: ListItemProps<'a', { button?: true }>) => {
-    return <ListItem button component="a" {...props} />
-}
-
 const FlatList: React.FC = () => {
     const classes = useStyles()
 
+    const history = useHistory()
+
+    const employees = useAppSelector(selectEmployees)
+    const employeesFetchError = useAppSelector(selectEmployeesError)
+    const dispatch = useAppDispatch()
+
+    const handleEmployeeClick = (id: number) => {
+        history.push(`/${id}`)
+    }
+
+    React.useEffect(() => {
+        if (employees.length === 0) {
+            dispatch({ type: FETCH_EMPLOYEES })
+        }
+    }, [dispatch, employees])
+
     return (
         <PageContainer>
+            {!!employeesFetchError && <CommonSnackbar message={employeesFetchError} />}
             <div className={classes.root}>
+                <CommonAppBar name="List" />
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -38,28 +53,18 @@ const FlatList: React.FC = () => {
                     label="Search List"
                     id="search"
                 />
-                <List component="nav" aria-label="main mailbox folders">
-                    <ListItem button>
-                        <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Inbox" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Drafts" />
-                    </ListItem>
-                </List>
-                <Divider />
-                <List component="nav" aria-label="secondary mailbox folders">
-                    <ListItem button>
-                        <ListItemText primary="Trash" />
-                    </ListItem>
-                    <ListItemLink href="#simple-list">
-                        <ListItemText primary="Spam" />
-                    </ListItemLink>
+                <List component="nav">
+                    {employees.map((eachEmployee, index) => {
+                        return (
+                            <ListItem
+                                key={index}
+                                button
+                                onClick={() => handleEmployeeClick(eachEmployee.id)}
+                            >
+                                <ListItemText>{eachEmployee.employee_name}</ListItemText>
+                            </ListItem>
+                        )
+                    })}
                 </List>
             </div>
         </PageContainer>
