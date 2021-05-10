@@ -4,10 +4,6 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { saveToLocalStorage } from '../utils/localStorageUtils'
 
 export function* loginSaga(action: PayloadAction<{ username: string; password: string }>) {
-    // const response = yield call(fetchEmployeesService)
-
-    // console.log('sg', response)
-
     const users = sampleUsers
 
     if (!action.payload.username && !action.payload.password) {

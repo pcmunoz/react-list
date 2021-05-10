@@ -7,7 +7,6 @@ export const fetchEmployeesService = () => {
 
     return fetch(EMPLOYEE_API_ENDPOINT, parameters)
         .then((response) => {
-            console.log(response)
             return response.json()
         })
         .then((json) => {
