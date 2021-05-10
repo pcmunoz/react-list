@@ -4,6 +4,8 @@ Pages:
 
 Login
 
+Credentials: un: user1, pw: user1
+
 List
 
 Detail
