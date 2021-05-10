@@ -1,4 +1,4 @@
-export const fetchEmployeesService = () => {
+export const fetchEmployeesService = (): Promise<any> => {
     const EMPLOYEE_API_ENDPOINT = 'https://dummy.restapiexample.com/api/v1/employees'
 
     const parameters = {

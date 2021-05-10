@@ -2,15 +2,15 @@
 
 ## Pages:
 
-Login
+### Login
 
 `Credentials: un: user1, pw: user1`
 
-List
+### List
 
-Detail
+### Detail
 
-Deployed to github pages: https://pcmunoz.github.io/react-list/
+Deployed to github pages: https://pcmunoz.github.io/react-list/ (Not latest code)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
