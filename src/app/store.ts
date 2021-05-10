@@ -10,7 +10,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const persistedState = {
     currentUser: { user: loadFromLocalStorage() },
-    employees: { list: [] },
+    employees: { list: [], loading: true },
 }
 
 const rootReducer = combineReducers({
