@@ -6,9 +6,10 @@
 
 `Credentials: un: user1, pw: user1`
 
-### List
+### List and Detail
 
-### Detail
+Refresh page to refetch from api https://dummy.restapiexample.com/api/v1/employees
+This will show an error if unsuccessful and populate employees `using sample-employees.json`
 
 Deployed to github pages: https://pcmunoz.github.io/react-list/ (Not latest code)
 
