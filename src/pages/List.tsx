@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { FETCH_EMPLOYEES } from '../app/actions'
 import CommonSnackbar from '../common/Snackbar'
 import { useHistory } from 'react-router-dom'
+import { Employee } from '../model/employee'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,8 +31,15 @@ const FlatList: React.FC = () => {
     const employeesFetchError = useAppSelector(selectEmployeesError)
     const dispatch = useAppDispatch()
 
+    const [search, setSearch] = React.useState<string>('')
+    const [localEmployees, setLocalEmployees] = React.useState<Employee[]>([])
+
     const handleEmployeeClick = (id: number) => {
-        history.push(`/${id}`)
+        history.push(`/react-list/${id}`)
+    }
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value)
     }
 
     React.useEffect(() => {
@@ -39,6 +47,20 @@ const FlatList: React.FC = () => {
             dispatch({ type: FETCH_EMPLOYEES })
         }
     }, [dispatch, employees])
+
+    React.useEffect(() => {
+        if (employees.length > 0) {
+            if (search) {
+                setLocalEmployees(
+                    employees.filter((eachEmployee) =>
+                        eachEmployee.employee_name.toLocaleLowerCase().includes(search),
+                    ),
+                )
+            } else {
+                setLocalEmployees(employees)
+            }
+        }
+    }, [search, employees])
 
     return (
         <PageContainer>
@@ -52,9 +74,11 @@ const FlatList: React.FC = () => {
                     name="search"
                     label="Search List"
                     id="search"
+                    value={search}
+                    onChange={handleSearchChange}
                 />
                 <List component="nav">
-                    {employees.map((eachEmployee, index) => {
+                    {localEmployees.map((eachEmployee, index) => {
                         return (
                             <ListItem
                                 key={index}

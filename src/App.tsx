@@ -17,7 +17,7 @@ const App: React.FC = () => {
     return (
         <Router>
             <Switch>
-                <Route path="/:employeeId">
+                <Route path="/react-list/:employeeId">
                     <SingleDetail />
                 </Route>
                 <Route path="/">
